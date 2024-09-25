@@ -4,53 +4,118 @@ body{
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: hsl(0, 0%, 95%);
+    background: linear-gradient(45deg, 
+                #ff9a9e,   
+                #fad0c4,   
+                #fbc2eb,   /*all the colours the background will trnasiotion to */
+                #a18cd1,   
+                #84fab0,   
+                #8fd3f4);  
+    background-size: 600% 600%;
+    animation: gradientAnimation 15s ease infinite;
+    position: relative; /* Added to ensure pseudo-elements follow z-index */
+    z-index: 0; /* Set z-index of body below content */
 }
+
+body::before { /* ::before used to add the decorative background without interfering with the contents of the calculator(<body> of page)*/
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.1), rgba(0,0,0,0));
+    opacity: 0.4;
+    animation: pulse 6s infinite ease-in-out;
+}
+
+@keyframes gradientAnimation { /*@keyframes implemented to make the background move smoothly*/
+    0% { background-position: 0% 50%; }
+    20% { background-position: 50% 50%; }
+    40% { background-position: 100% 50%; }
+    60% { background-position: 50% 100%; }
+    80% { background-position: 0% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse { /*@keyframes pulse implemented to give a glowing effect by making it grow and shrink*/
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
 #calculator{
-    font-family: Arial, sans-serif;
-    background-color: hsl(0, 0%, 15%);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(247, 169, 169); 
     border-radius: 15px;
     max-width: 500px;
     overflow: hidden;
+    z-index: 1; /* to ensure calculator is above the background and the pseudo elemts don't overlap */
+    position: relative;
+
+
 }
+
 #display{
     width: 100%;
     padding: 20px;
     font-size: 5rem;
+    color: white;
     text-align: left;
     border: none;
-    background-color: hsl(0, 0%, 20%);
-    color: white;
+    background-color: rgb(248, 80, 80); /*Changed the calculator to more of a red theme */
+
 }
+
 #keys{
-    display: grid;
+    display:grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 10px;
     padding: 25px;
 }
+
+
 button{
     width: 100px;
     height: 100px;
     border-radius: 50px;
     border: none;
-    background-color: rgb(255, 73, 73);
     color: white;
+    background-color:rgb(248, 80, 80);
     font-size: 3rem;
     font-weight: bold;
     cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 2; /* Ensures buttons are clickable */
+    position: relative;
+
+
 }
 button:hover{
-    background-color: hsl(0, 0%, 40%);
+    background-color: rgb(248, 120, 120);
+    transform: scale(1.18);
+    color: rgb(252, 229, 229); 
+    box-shadow: 0 0 20px rgba(248, 80, 80, 0.7); 
+    
 }
-button:active{
-    background-color: hsl(0, 0%, 50%);
+
+button:active{ /* flashes the button so user aware its been clicked */
+    background-color: rgb(238, 191, 191);
 }
-.operator-btn{
-    background-color: hsl(35, 100%, 55%);
+
+.operators{
+    background-color: rgb(176, 106, 241); /*different colour to distinguish operators */
 }
-.operator-btn:hover{
-    background-color: hsl(35, 100%, 65%);
+.operators:hover{
+    background-color: rgb(195, 144, 241);
 }
-.operator-btn:active{
-    background-color: hsl(35, 100%, 75%);
+.operators:active{
+    background-color: rgb(209, 184, 233);
 }
